@@ -1,14 +1,17 @@
 generate_d.split <-  function(rg, inbag.obs.tri, tri){
-  #' it starts with all observations that are training data for tree tri (top of script)
+  #' it starts with all observations that are training data for tree tri
   #' checks the split variable and split value and splits the data in d.split[[1]]
   #' into d.split[[2]] and d.split[[3]]
   #' continues to the terminal nodes
+  #' returns number of observations in split and terminal nodes, uses positions (starting at 1) not IDs (starting at 0)
   
   d.split <- list()
   d.split[[1]] <- inbag.obs.tri
   all.nodes <- unique(rg$forest$child.nodeIDs[[tri]] %>% unlist)
   #all.nodes <- base::setdiff(all.nodes,0)
   all.nodes <- all.nodes[order(all.nodes)]
+  # instead of going through all nodes, why not start with going only through split nodes?
+  # use sNodes from subforest.R (returns nodeIDs of split nodes)
   for(nodeID in all.nodes){
     #nodeID %>% paste('nodeID') %>% print
     #ti[ti$nodeID == nodeID , 'terminal'] %>% paste('terminal') %>% print

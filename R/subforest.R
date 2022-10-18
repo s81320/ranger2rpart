@@ -42,3 +42,12 @@ tNodes <- function(forest, tri){
   which(forest$child.nodeIDs[[tri]][[1]]==0)-1
 }
 
+sNodes <- function(forest, tri){
+  #' nodeIDs of split nodes for th tri-th tree in a ranger forest
+  #' 
+  #' split nodes are those where child nodes (left and right) are a nodeID, thus larger than 0, since the root is nobody's child
+  #' 
+  which(forest$child.nodeIDs[[tri]][[1]]>0)-1
+}
+
+
