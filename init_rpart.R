@@ -14,17 +14,19 @@ load('data/CleveHungSwissVA.rda')
 
 data.train <- Cleve[,1:11]
 
-set.seed(2)
+set.seed(4)
 rg <- ranger(CAD~.
              , num.trees = 1
              , mtry=4
              , data=data.train 
              , keep.inbag = T
              , max.depth = 4
-             , respect.unordered.factors = 'partition')
+             #, respect.unordered.factors = 'partition'
+             , min.node.size=50
+             )
 
-predict(rg, data=data.train, type='terminalNodes')$predictions
-predict(rg, data=data.train )$predictions
+predict(rg, data=data.train, type='terminalNodes')$predictions %>% table
+#predict(rg, data=data.train )$predictions
 
 tri <- 1
 
@@ -33,12 +35,13 @@ plotTree1(rg,tri)
 rprtObj <- list(frame=NULL, call=NULL, method='class',splits=NULL)
 class(rprtObj) <-  'rpart'
 
-
 rprtObj$frame <- generate_frame(rg,tri)
+rprtObj$frame
 
 rprtObj$where <- predict(rg, data = data.train, type = 'terminalNodes')$predictions[,tri]
 
 rprtObj$splits <- generate_splits(rg, tri)
+rprtObj$splits
 
 rprtObj$call <- treeFit_Cleve$call # this is bad cheating!
 # put something original here!

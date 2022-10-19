@@ -74,22 +74,9 @@ treeFit$frame[,10] # undefined column
 treeFit$frame[,9][1,2] # works
 
 # how can we build such an object? such an abomination??
-
 A <- data.frame(Haus=c(1,2,3,4), Tier=c(10,20,30,40))
 dim(A)
 B <- matrix(1:12,nrow=4)
 A$yval2 <- B
 dim(A) ; A
-
-
-#### ranger ####
-################
-library(ranger)
-# load Cleve!
-data.train <- Cleve[,1:11]
-set.seed(1)
-rg <- ranger(CAD~.,num.trees = 5, mtry=4, data=data.train , keep.inbag = T)
-
-treeFit_Cleve <- rpart(CAD~.,data=data.train
-                 ,method = 'class'
-                 , control=rpart.control(maxsurrogate=0, maxcompete=0))
+# this is how!

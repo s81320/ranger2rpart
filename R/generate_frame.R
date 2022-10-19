@@ -13,7 +13,7 @@ generate_frame <- function(rg, tri){
   yval2 <-  generate_yval2(rg, inbag.obs.tri, tri, d.split)
   
   frame <- data.frame(
-    var=generate_var(rg) 
+    var=generate_var(rg,tri) 
     , n=lengths(d.split)
     , wt=lengths(d.split)
     #, wt=n # working??
